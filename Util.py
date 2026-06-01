@@ -31,5 +31,11 @@ def flipX(image):
         image[:,i] = image[:,-i-1]
         image[:,-i-1] = tmp
 
+def flipY(image):
+    for i in range(len(image)//2):
+        tmp = np.copy(image[i,:])
+        image[i,:] = image[-i-1,:]
+        image[-i-1,:] = tmp
+
 def cropImage(data, y, x, height, width):
     return data[y:y+height,x:x+width]
