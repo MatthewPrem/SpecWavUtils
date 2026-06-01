@@ -32,7 +32,7 @@ def calcLinearFit(data, lines, minW0, maxW0, minScale, maxScale, resW = 200, res
     if viewPlots:
         fig1, ax1 = plt.subplots(1,1)
         mask = np.logical_not(np.isnan(params))
-        img = ax1.imshow(params, vmin=np.min(params[mask]), vmax=np.max(params[mask]), extent=[minScale, maxScale, minW0, maxW0])
+        img = ax1.imshow(params, vmin=np.min(params[mask]), vmax=np.max(params[mask]), extent=[minScale, maxScale, maxW0, minW0])
         fig1.colorbar(img)
         ax1.set_aspect("auto")
 
