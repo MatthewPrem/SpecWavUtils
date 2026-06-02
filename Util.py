@@ -20,6 +20,10 @@ def createLineList(path, writePath=None, mergedLines = ["Hg", "Kr", "Ar", "Xe"],
             file.write(text)
     return retData
 
+def loadLineList(path):
+    dat = pd.read_csv(path, delimiter="|")
+    return dat.values
+
 def loadLinePosAmp(path, minIntensity=1):
     dat = pd.read_csv(path, delimiter="|")
     mask = dat.values[:,5]>minIntensity

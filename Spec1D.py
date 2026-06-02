@@ -22,6 +22,16 @@ def calcModel(lines, arrLen, w0, s, width=2.5, offset=0, power=5):
         model += LorentzLine(xs, x0, l[4], 2.5, 0, 5)
     return model
 
+def updateLinearFit(event, updatefig, line, lines, model):
+    model *= 0
+    xs = np.arange(0, len(model))
+    for l in lines:
+        x0 = wavToPixel(l[1], w0=event.ydata, a0=event.xdata)
+        model += LorentzLine(xs, x0, l[4], 2.5, 0, 5)
+    line.set_ydata(model/np.max(model))
+    updatefig.canvas.draw()
+    updatefig.canvas.flush_events()
+
 def calcLinearFit(data, lines, minW0, maxW0, minScale, maxScale, resW = 200, resS = 200, viewPlots = True):
     params = np.zeros((int(resW), int(resS)))
     xs = np.arange(0, len(data))
@@ -42,15 +52,24 @@ def calcLinearFit(data, lines, minW0, maxW0, minScale, maxScale, resW = 200, res
         mask = np.logical_not(np.isnan(params))
         img = ax1.imshow(params, vmin=np.min(params[mask]), vmax=np.max(params[mask]), extent=[minScale, maxScale, maxW0, minW0])
         fig1.colorbar(img)
+        ax1.plot(sBest, wBest, "rx")
+        ax1.set_xlabel("Scale value (Pixels/Angstrom)")
+        ax1.set_xlabel("Starting wavelength (A)")
         ax1.set_aspect("auto")
 
         fig2, ax2 = plt.subplots(1,1)
-        ax2.plot(data/np.max(data))
+        ax2.plot(data/np.max(data), label="data")
         model = np.zeros_like(data)
         for l in lines:
             x0 = wavToPixel(l[1], w0=wBest, a0=sBest)
             model += LorentzLine(xs, x0, l[4], 2.5, 0, 5)
-        ax2.plot(model/np.max(model))
+        line, = ax2.plot(model/np.max(model), label="model")
+        ax2.legend()
+        ax2.set_xlabel("Wavelength (A)")
+        ax2.set_ylabel("Normalized Intensity")
+        cid = fig1.canvas.mpl_connect('button_press_event', lambda e: updateLinearFit(e, fig2, line, lines, model))
+
+
     
     return wBest, sBest 
 
