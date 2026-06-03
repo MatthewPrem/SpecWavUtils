@@ -2,6 +2,21 @@ import numpy as np
 import pandas as pd
 
 def createLineList(path, writePath=None, mergedLines = ["Hg", "Kr", "Ar", "Xe"], minAmp = 100, minWav = 14000, maxWav=26000):
+    """
+    Function to create line lists from predicted lines from a partiular line list provided by Joe Durback. Outputs either a 2D list
+    where the columns are formatted like PypeIt line lists, with the option to save a PypeIt formatted line list dat file.
+
+    Args:
+        path(string): Path to the line list provuded by Joe.
+        writePath(string, optional): Path to the .dat file that will be saved in PypeIt line list style. Default: None, which does not save any file.
+        mergedLines(list of strings, optional): List of ions that will be loaded into the returned line list. Default: ["Hg", "Kr", "Ar", "Xe"], which will load all of the ions provided in Joe's line list
+        minAmp(float, optional): Minimum line amplitude that will be loaded into the line list. Defualt: 100.
+        minWav(float, optional): Minimum wavelength that loaded lines will be. Default: 14000 Angstroms.
+        maxWav(float, optional): Maximum wavelength that loaded lines will be. Default: 26000 Angstroms.
+
+    Returns:
+        2D list containing formatted like a normal PypeIt line list. The list is in Row-Major order and the columns are [ion (string), wavelength (Angstroms), NIST, Instr, amplitude (float), Source (string)]
+    """
     data = pd.read_csv(path, delimiter=" ")
     retData = []
     for row in range(len(data)):
@@ -21,25 +36,29 @@ def createLineList(path, writePath=None, mergedLines = ["Hg", "Kr", "Ar", "Xe"],
     return retData
 
 def loadLineList(path):
+    """
+    Function to load a PypeIt-style line list into a 2D list.
+
+    Args:
+        path(string): The filepath to the line list.
+    
+    Returns:
+        2D list containing formatted like a normal PypeIt line list. The list is in Row-Major order and the columns are [ion (string), wavelength (Angstroms), NIST, Instr, amplitude (float), Source (string)]
+    """
     dat = pd.read_csv(path, delimiter="|")
     return dat.values
 
 def loadLinePosAmp(path, minIntensity=1):
+    """
+    Function to load a PypeIt-style line list into a 2D Array. The returned array will only contain line positions and amplitudes.
+
+    Args:
+        path(string): The filepath to the line list.
+        minIntensity(float, optional): The minimum intensity of lines that will be in the returned array. Default: 1
+
+    Returns:
+        2D array in Row-Major order and the columns are [wavelength (Angstroms), amplitude (float)]
+    """
     dat = pd.read_csv(path, delimiter="|")
     mask = dat.values[:,5]>minIntensity
     return np.array([(dat.values[:,2])[mask], (dat.values[:,5])[mask]])
-
-def flipX(image):
-    for i in range(len(image[0])//2):
-        tmp = np.copy(image[:,i])
-        image[:,i] = image[:,-i-1]
-        image[:,-i-1] = tmp
-
-def flipY(image):
-    for i in range(len(image)//2):
-        tmp = np.copy(image[i,:])
-        image[i,:] = image[-i-1,:]
-        image[-i-1,:] = tmp
-
-def cropImage(data, y, x, height, width):
-    return data[y:y+height,x:x+width]
