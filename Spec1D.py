@@ -4,6 +4,17 @@ import Util
 from scipy.interpolate import CubicSpline
 
 def wavToPixel(wavelength, w0=1.16236340e+04, a0=1.33788072e-01, round=True):
+    """
+    Utility function to convert a wavelength to its pixel coordinates using a linear conversion function
+
+    Arguments: 
+        w0 (float): The wavelength of the first pixel in Angstroms
+        a0 (float): The linear scale factor in pixels per Angstrom
+        round (bool): Should the result be rounded to the nearest integer. Default: True
+
+    Returns:
+        Pixel Coord:  Pixel value as either a float if rounding is off, or an int if rounding is on.
+    """
     if not round:
         return (wavelength-w0)*a0
     else:
