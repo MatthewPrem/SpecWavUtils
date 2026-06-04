@@ -1,4 +1,4 @@
-#Spec Utils
+# Spec Utils
 A collection of helpful functions I have written to help me analyze 1D and 2D spectra and fit lines.
 Contains:
 - Functions to load and save line lists
