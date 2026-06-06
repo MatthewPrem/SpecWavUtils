@@ -8,8 +8,8 @@ Contains:
 - Interactive code to fit Lorentzian or Gaussian lines to a 1D spectrum and calculate R values.
 
 The interactive linear fit parameter space:
-<img width="1033*0.5" height="1231*0.5" alt="Code_PKZuUwXK8k" src="https://github.com/user-attachments/assets/e1cd39bf-42f5-4a2e-82df-15ed76a0e621" />
+<img width="1033" height="1231" alt="Code_PKZuUwXK8k" src="https://github.com/user-attachments/assets/e1cd39bf-42f5-4a2e-82df-15ed76a0e621" />
 
 The interactive Lorentzian line fitting and resolving power plotting.
-<img width="1046*0.5" height="1303*0.5" alt="Code_QKSNtOIlwH" src="https://github.com/user-attachments/assets/71814d39-5364-418e-97da-14c6f0ae1481" />
+<img width="1046" height="1303" alt="Code_QKSNtOIlwH" src="https://github.com/user-attachments/assets/71814d39-5364-418e-97da-14c6f0ae1481" />
 
