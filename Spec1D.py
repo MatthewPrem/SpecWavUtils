@@ -69,7 +69,7 @@ def calcModel(lines, arrLen, w0, s, width=2.5, offset=0, power=5):
     model=np.zeros(arrLen)
     xs = np.arange(0, arrLen)
     for l in lines:
-        x0 = wavToPixel(l[1], w0, a0=s)
+        x0 = wavToPixel(float(l[1]), w0, a0=s)
         model += LorentzLine(xs, x0, l[4], width, offset, power)
     return model
 

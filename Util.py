@@ -35,7 +35,7 @@ def createLineList(path, writePath=None, mergedLines = ["Hg", "Kr", "Ar", "Xe"],
             for i in range(len(retData)):
                 text += f"| {retData[i][0]} | {retData[i][1]:>9.3f} |    1 |{retData[i][3]:>6.0f} | {retData[i][4]:>9.1f} | {retData[i][5]} |\n"
             file.write(text)
-    return np.array(retData)
+    return retData
 
 def loadNISTData(path, writePath=None, mergedLines = ["Hg", "Kr", "Ar", "Xe"], minAmp = 1, maxAmp=np.inf, minWav = 14000, maxWav=26000):
     """
