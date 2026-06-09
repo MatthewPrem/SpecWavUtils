@@ -3,7 +3,8 @@ import pandas as pd
 
 def createLineList(path, writePath=None, mergedLines = ["Hg", "Kr", "Ar", "Xe"], minAmp = 100, maxAmp=np.inf, minWav = 14000, maxWav=26000):
     """
-    Function to create line lists from predicted lines from a partiular line list provided by Joe Durback. Outputs either a 2D list
+    Function to create line lists from predicted lines from a partiular line list kindly provided by Joe Durback, which is a 3-column text file delimited by spaces.
+    The first column is the wavelength in Angstroms, the second is the relative intensity, and the third is the ion type. Outputs either a 2D list
     where the columns are formatted like PypeIt line lists, with the option to save a PypeIt formatted line list dat file.
 
     Args:
@@ -34,7 +35,7 @@ def createLineList(path, writePath=None, mergedLines = ["Hg", "Kr", "Ar", "Xe"],
             for i in range(len(retData)):
                 text += f"| {retData[i][0]} | {retData[i][1]:>9.3f} |    1 |{retData[i][3]:>6.0f} | {retData[i][4]:>9.1f} | {retData[i][5]} |\n"
             file.write(text)
-    return retData
+    return np.array(retData)
 
 def loadNISTData(path, writePath=None, mergedLines = ["Hg", "Kr", "Ar", "Xe"], minAmp = 1, maxAmp=np.inf, minWav = 14000, maxWav=26000):
     """
