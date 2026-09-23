@@ -69,7 +69,7 @@ def calcModel(lines, arrLen, w0, s, width=2.5, offset=0, power=5):
     model=np.zeros(arrLen)
     xs = np.arange(0, arrLen)
     for l in lines:
-        x0 = wavToPixel(float(l[0]), w0, a0=s)
+        x0 = wavToPixel(float(l[1]), w0, a0=s)
         model += LorentzLine(xs, x0, l[4], width, offset, power)
     return model
 
@@ -80,7 +80,7 @@ def updateLinearFit(event, updatefig, line, lines, model):
     model *= 0
     xs = np.arange(0, len(model))
     for l in lines:
-        x0 = wavToPixel(l[0], w0=event.ydata, a0=event.xdata)
+        x0 = wavToPixel(l[1], w0=event.ydata, a0=event.xdata)
         model += LorentzLine(xs, x0, l[4], 2.5, 0, 5)
     line.set_ydata(model/np.max(model))
     updatefig.canvas.draw()
@@ -117,7 +117,7 @@ def calcLinearFit(data, lines, minW0, maxW0, minScale, maxScale, resW = 200, res
         for s in range(len(ses)):
             model = np.zeros_like(data)
             for l in lines:
-                x0 = wavToPixel(l[0], w0=ws[w], a0=ses[s])
+                x0 = wavToPixel(l[1], w0=ws[w], a0=ses[s])
                 model += LorentzLine(xs, x0, l[4], 2.5, 0, 5)
             params[w,s] = absResid(data/np.max(data), model/np.max(model))
     loc = np.argmin(params)
@@ -137,7 +137,7 @@ def calcLinearFit(data, lines, minW0, maxW0, minScale, maxScale, resW = 200, res
         ax2.plot(data/np.max(data), label="data")
         model = np.zeros_like(data)
         for l in lines:
-            x0 = wavToPixel(l[0], w0=wBest, a0=sBest)
+            x0 = wavToPixel(l[1], w0=wBest, a0=sBest)
             model += LorentzLine(xs, x0, l[4], 2.5, 0, 5)
         line, = ax2.plot(model/np.max(model), label="model")
         ax2.legend()

@@ -26,14 +26,14 @@ def createLineList(path, writePath=None, mergedLines = ["Hg", "Kr", "Ar", "Xe"],
             continue
         ion = data.values[row][3][0:2]
         if ion in mergedLines:
-            retData.append([data.values[row][0],f"{ion}I",1,data.values[row][2],data.values[row][1],data.values[row][3]])
+            retData.append([f"{ion}I",data.values[row][0],1,data.values[row][2],data.values[row][1],data.values[row][3]])
 
     if writePath is not None:
         with open(writePath, mode="w") as file:
-            file.write(f"| wave      | ion | NIST | Instr | amplitude |       Source |\n")
+            file.write(f"| ion | wave      | NIST | Instr | amplitude |       Source |\n")
             text = ""
             for i in range(len(retData)):
-                text += f"| {retData[i][1]:>9.3f} | {retData[i][0]} |    1 |{retData[i][3]:>6.0f} | {retData[i][4]:>9.1f} | {retData[i][5]} |\n"
+                text += f"| {retData[i][0]} | {retData[i][1]:>9.3f} |    1 |{retData[i][3]:>6.0f} | {retData[i][4]:>9.1f} | {retData[i][5]} |\n"
             file.write(text)
     return retData
 
@@ -60,14 +60,14 @@ def simpleLineListToPypeIt(path, writePath=None, ion="", minAmp = 0, maxAmp=np.i
     for row in range(len(data)):
         if (data.values[row][1] < minAmp or data.values[row][1] > maxAmp or data.values[row][0] < minWav or data.values[row][0] > maxWav):
             continue
-        retData.append([data.values[row][0] * conversionFactorToAngstroms,ion,1,data.values[row][1],data.values[row][1],"unknown"])
+        retData.append([ion,data.values[row][0] * conversionFactorToAngstroms,1,data.values[row][1],data.values[row][1],"unknown"])
 
     if writePath is not None:
         with open(writePath, mode="w") as file:
-            file.write(f"| wave      | ion | NIST | Instr | amplitude |  Source |\n")
+            file.write(f"| ion | wave      | NIST | Instr | amplitude |  Source |\n")
             text = ""
             for i in range(len(retData)):
-                text += f"| {retData[i][0]:>9.3f} | {retData[i][1]} |    1 |{retData[i][3]:>6.0f} | {retData[i][4]:>9.1f} | {retData[i][5]} |\n"
+                text += f"| {retData[i][0]} | {retData[i][1]:>9.3f} |    1 |{retData[i][3]:>6.0f} | {retData[i][4]:>9.1f} | {retData[i][5]} |\n"
             file.write(text)
     return retData
 
@@ -101,10 +101,10 @@ def loadNISTData(path, writePath=None, mergedLines = ["Hg", "Kr", "Ar", "Xe"], m
 
     if writePath is not None:
         with open(writePath, mode="w") as file:
-            file.write(f"| wave      | ion | NIST | Instr | amplitude |       Source |\n")
+            file.write(f"| ion | wave      | NIST | Instr | amplitude |       Source |\n")
             text = ""
             for i in range(len(retData)):
-                text += f"| {retData[i][1]:>9.3f} | {retData[i][0]} |    1 |{retData[i][3]:>6.0f} | {retData[i][4]:>9.1f} | {retData[i][5]} |\n"
+                text += f"| {retData[i][0]} | {retData[i][1]:>9.3f} |    1 |{retData[i][3]:>6.0f} | {retData[i][4]:>9.1f} | {retData[i][5]} |\n"
             file.write(text)
     return retData
 
