@@ -130,7 +130,7 @@ def calcLinearFit(data, lines, minW0, maxW0, minScale, maxScale, resW = 200, res
         fig1.colorbar(img)
         ax1.plot(sBest, wBest, "rx")
         ax1.set_xlabel("Scale value (Pixels/Angstrom)")
-        ax1.set_xlabel("Starting wavelength (A)")
+        ax1.set_ylabel("Starting wavelength (A)")
         ax1.set_aspect("auto")
 
         fig2, ax2 = plt.subplots(1,1)
